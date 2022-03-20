@@ -41,6 +41,23 @@ function isOnBoard(x,y){
   }
   return true;
 }
+
+function isAngled(x,y){
+return ((x == 0 || x == 7) && (y == 0 || y == 7))
+}
+
+function isSide(x,y){
+return (x == 0 && x == 7 && y == 0 && y == 7)
+}
+
+function calculateScore(x,y,tilesToFlip){
+  let score = isAngled(x,y) ? 0.8 : (isSide(x,y)? 0.4 : 0);
+tilesToFlip.forEach((item, i) => {
+  score += isSide(item[0],item[1]) ? 2 : 1;
+});
+return score;
+}
+
 function isOtherTile(xNext,yNext,counter){
   if(data[xNext][yNext] == WhiteCounter && counter == BlackCounter ||
   data[xNext][yNext] == BlackCounter  && counter == WhiteCounter){
@@ -130,6 +147,7 @@ setTimeout(pcMoves, 1000);
 
 function pcMoves(){
   let tilesToFlipBest = [];
+  let bestScore = 0;
   let tilesToFlip = [];
   let moveBest = [-1,-1];
   for (var i = 0; i < 8; i++) {
@@ -137,11 +155,16 @@ function pcMoves(){
       console.log("pc tries",i,j)
       tilesToFlip = isOk(i,j,BlackCounter);
       if(tilesToFlip)
-        console.log("pc may flip:"+tilesToFlip)
-      if(tilesToFlip && tilesToFlipBest.length < tilesToFlip.length){
-      tilesToFlipBest = tilesToFlip;
-      moveBest = [i,j];
-      }
+        {console.log("pc may flip:"+tilesToFlip)
+         let score = calculateScore(i,j,tilesToFlip);
+         console.log("probable score:"+score);
+         if(bestScore < score){
+           tilesToFlipBest = tilesToFlip;
+           moveBest = [i,j];
+           bestScore = score;
+           console.log(bestScore);
+         }
+    }
     }
   }
   console.log("pc flips:"+tilesToFlipBest)
