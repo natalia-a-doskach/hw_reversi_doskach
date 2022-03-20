@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
+.no-border {
+  border-collapse: collapse;
+}
+
+.square {
+  width: 83px;
+  height: 83px;
+  cursor: pointer;
+}
+
+.light {
+  background-color: #08A4BD;
+}
+.light:hover {
+  background-color: #fff;
+}
+
+.dark {
+  background-color: #4281A4;
+}
+.dark:hover {
+  background-color: #fff;
+}
+
+.piece {
+  display:block;
+  margin: auto;
+}
